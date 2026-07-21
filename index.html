@@ -61,6 +61,146 @@
             padding: 2rem;
         }
 
+        /* Sección de la Bombonera con imágenes */
+        .bombonera-section {
+            background: linear-gradient(145deg, #1a2a5a, #0d1a3a);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid #f5c842;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(245, 200, 66, 0.1);
+        }
+
+        .bombonera-section h2 {
+            color: #f5c842;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .image-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(245, 200, 66, 0.3);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .image-card:hover {
+            transform: scale(1.03);
+            border-color: #f5c842;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-card .caption {
+            padding: 0.8rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: #f5c842;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Imagen de la Bombonera (usando SVG como placeholder) */
+        .bombonera-stadium {
+            background: linear-gradient(135deg, #1a3a2a, #0d2a1a);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid #f5c842;
+            position: relative;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bombonera-stadium .stadium-svg {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        /* POKEMON DE BOCA - BOCACHU */
+        .pokemon-container {
+            position: relative;
+            display: inline-block;
+            margin: 0 auto;
+            cursor: pointer;
+            animation: floatPokemon 3s ease-in-out infinite;
+        }
+
+        @keyframes floatPokemon {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .pokemon-container:hover {
+            animation: floatPokemon 1s ease-in-out infinite;
+        }
+
+        .pokemon-svg {
+            width: 150px;
+            height: 150px;
+            filter: drop-shadow(0 0 30px rgba(245, 200, 66, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .pokemon-container:hover .pokemon-svg {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .pokemon-name {
+            font-size: 1.5rem;
+            color: #f5c842;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(245, 200, 66, 0.3);
+        }
+
+        .pokemon-type {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.3rem;
+        }
+
+        .type-badge {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: #f5c842;
+            color: #1a1a1a;
+        }
+
+        .type-badge.fighting {
+            background: #1a3a8a;
+            color: #f5c842;
+        }
+
+        /* Interactivo */
         .interactive-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -359,6 +499,23 @@
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 30px rgba(245, 200, 66, 0.6);
         }
+
+        /* Efecto de luz en la Bombonera */
+        .stadium-light {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(ellipse at center, rgba(245, 200, 66, 0.05), transparent 70%);
+            pointer-events: none;
+            animation: lightPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes lightPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -368,320 +525,223 @@
     </header>
 
     <div class="container">
-        <div class="interactive-section">
-            <div class="stadium-card">
-                <h2>⚽ ¡Hacé un Gol!</h2>
-                <div class="stadium-effect">
-                    <div class="goal" id="goalEmoji">⚽</div>
-                    <div class="field"></div>
-                    <div style="display: flex; gap: 2rem; margin-top: 1rem;">
-                        <span>🚩</span>
-                        <span>🚩</span>
-                        <span>🚩</span>
-                    </div>
+        <!-- SECCIÓN DE LA BOMBONERA CON IMÁGENES Y POKEMON -->
+        <div class="bombonera-section">
+            <h2>🏟️ La Bombonera y la Hinchada</h2>
+            
+            <div class="image-grid">
+                <!-- Imagen 1: Bombonera -->
+                <div class="image-card">
+                    <svg width="100%" height="250" viewBox="0 0 600 250" style="background: linear-gradient(135deg, #1a3a2a, #0d2a1a);">
+                        <!-- Césped -->
+                        <rect x="0" y="120" width="600" height="130" fill="#1a5a2a"/>
+                        <rect x="0" y="120" width="600" height="130" fill="url(#grassPattern)" opacity="0.3"/>
+                        
+                        <!-- Patrones de césped -->
+                        <pattern id="grassPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <rect width="20" height="40" fill="#2a6a3a"/>
+                            <rect x="20" width="20" height="40" fill="#1a5a2a"/>
+                        </pattern>
+                        
+                        <!-- Cancha -->
+                        <rect x="100" y="130" width="400" height="110" fill="#2a7a3a" stroke="#f5c842" stroke-width="2"/>
+                        <circle cx="300" cy="185" r="25" fill="none" stroke="#f5c842" stroke-width="2"/>
+                        <line x1="300" y1="130" x2="300" y2="240" stroke="#f5c842" stroke-width="2"/>
+                        <rect x="140" y="140" width="60" height="90" fill="none" stroke="#f5c842" stroke-width="2"/>
+                        <rect x="400" y="140" width="60" height="90" fill="none" stroke="#f5c842" stroke-width="2"/>
+                        
+                        <!-- Tribunas -->
+                        <rect x="0" y="0" width="600" height="30" fill="#1a2a5a" stroke="#f5c842" stroke-width="1"/>
+                        <rect x="0" y="30" width="600" height="90" fill="#2a3a6a" stroke="#f5c842" stroke-width="1" opacity="0.7"/>
+                        
+                        <!-- Techo -->
+                        <path d="M 0 0 Q 300 -30 600 0" fill="none" stroke="#f5c842" stroke-width="3"/>
+                        
+                        <!-- Banderas -->
+                        <rect x="50" y="30" width="20" height="90" fill="#f5c842"/>
+                        <rect x="530" y="30" width="20" height="90" fill="#f5c842"/>
+                        
+                        <!-- Luces del estadio -->
+                        <circle cx="100" cy="10" r="5" fill="#f5c842" opacity="0.8"/>
+                        <circle cx="200" cy="5" r="5" fill="#f5c842" opacity="0.8"/>
+                        <circle cx="300" cy="3" r="5" fill="#f5c842" opacity="0.8"/>
+                        <circle cx="400" cy="5" r="5" fill="#f5c842" opacity="0.8"/>
+                        <circle cx="500" cy="10" r="5" fill="#f5c842" opacity="0.8"/>
+                        
+                        <!-- Luces de estadio (rayos) -->
+                        <line x1="100" y1="15" x2="150" y2="120" stroke="#f5c842" stroke-width="1" opacity="0.3"/>
+                        <line x1="300" y1="10" x2="300" y2="120" stroke="#f5c842" stroke-width="1" opacity="0.3"/>
+                        <line x1="500" y1="15" x2="450" y2="120" stroke="#f5c842" stroke-width="1" opacity="0.3"/>
+                        
+                        <!-- POKEMON BOCACHU en el centro -->
+                        <g transform="translate(300, 175)" class="pokemon-container-svg">
+                            <animateTransform attributeName="transform" type="translate" 
+                                values="300,175; 300,165; 300,175" dur="2s" repeatCount="indefinite"/>
+                            
+                            <!-- Cuerpo de BOCACHU (amarillo) -->
+                            <ellipse cx="0" cy="0" rx="25" ry="30" fill="#f5c842"/>
+                            
+                            <!-- Orejas con puntas negras -->
+                            <polygon points="-20,-25 -15,-40 -8,-20" fill="#f5c842"/>
+                            <polygon points="-17,-38 -15,-40 -12,-35" fill="#1a1a1a"/>
+                            <polygon points="20,-25 15,-40 8,-20" fill="#f5c842"/>
+                            <polygon points="17,-38 15,-40 12,-35" fill="#1a1a1a"/>
+                            
+                            <!-- Rayo en la frente (símbolo de Boca) -->
+                            <polygon points="0,-30 -5,-22 0,-22 -3,-15 3,-22 0,-22" fill="#1a3a8a"/>
+                            
+                            <!-- Ojos -->
+                            <ellipse cx="-10" cy="-5" rx="6" ry="7" fill="white"/>
+                            <ellipse cx="10" cy="-5" rx="6" ry="7" fill="white"/>
+                            <ellipse cx="-10" cy="-4" rx="3" ry="4" fill="#1a1a1a"/>
+                            <ellipse cx="10" cy="-4" rx="3" ry="4" fill="#1a1a1a"/>
+                            
+                            <!-- Mejillas azules (como Boca) -->
+                            <ellipse cx="-18" cy="5" rx="8" ry="5" fill="#1a3a8a" opacity="0.5"/>
+                            <ellipse cx="18" cy="5" rx="8" ry="5" fill="#1a3a8a" opacity="0.5"/>
+                            
+                            <!-- Boca (sonrisa) -->
+                            <path d="M -10 10 Q 0 18 10 10" fill="none" stroke="#1a1a1a" stroke-width="2"/>
+                            
+                            <!-- Brazos -->
+                            <ellipse cx="-30" cy="5" rx="8" ry="6" fill="#f5c842" transform="rotate(-20, -30, 5)"/>
+                            <ellipse cx="30" cy="5" rx="8" ry="6" fill="#f5c842" transform="rotate(20, 30, 5)"/>
+                            
+                            <!-- Puños (pelota de fútbol) -->
+                            <circle cx="-35" cy="10" r="5" fill="#1a1a1a"/>
+                            <circle cx="35" cy="10" r="5" fill="#1a1a1a"/>
+                            
+                            <!-- Piernas -->
+                            <ellipse cx="-10" cy="28" rx="8" ry="6" fill="#f5c842"/>
+                            <ellipse cx="10" cy="28" rx="8" ry="6" fill="#f5c842"/>
+                            
+                            <!-- Zapatos (azules) -->
+                            <ellipse cx="-12" cy="34" rx="10" ry="4" fill="#1a3a8a"/>
+                            <ellipse cx="12" cy="34" rx="10" ry="4" fill="#1a3a8a"/>
+                            
+                            <!-- Cola con rayo -->
+                            <path d="M 0 25 Q -20 35 -25 45 Q -20 48 -15 42" fill="none" stroke="#f5c842" stroke-width="4"/>
+                            <polygon points="-25,45 -28,40 -20,40" fill="#f5c842"/>
+                            
+                            <!-- Número 6 en el pecho -->
+                            <text x="0" y="8" text-anchor="middle" font-size="12" font-weight="bold" fill="#1a3a8a">6</text>
+                        </g>
+                        
+                        <!-- Hinchada (puntos de colores en las tribunas) -->
+                        <g opacity="0.8">
+                            <circle cx="50" cy="80" r="3" fill="#f5c842"/>
+                            <circle cx="70" cy="75" r="3" fill="#1a3a8a"/>
+                            <circle cx="90" cy="85" r="3" fill="#f5c842"/>
+                            <circle cx="110" cy="70" r="3" fill="#1a3a8a"/>
+                            <circle cx="130" cy="78" r="3" fill="#f5c842"/>
+                            <circle cx="150" cy="82" r="3" fill="#f5c842"/>
+                            <circle cx="170" cy="65" r="3" fill="#1a3a8a"/>
+                            <circle cx="190" cy="72" r="3" fill="#f5c842"/>
+                            <circle cx="210" cy="80" r="3" fill="#1a3a8a"/>
+                            <circle cx="230" cy="68" r="3" fill="#f5c842"/>
+                            <circle cx="250" cy="75" r="3" fill="#1a3a8a"/>
+                            <circle cx="270" cy="82" r="3" fill="#f5c842"/>
+                            <circle cx="290" cy="70" r="3" fill="#1a3a8a"/>
+                            <circle cx="310" cy="78" r="3" fill="#f5c842"/>
+                            <circle cx="330" cy="65" r="3" fill="#1a3a8a"/>
+                            <circle cx="350" cy="72" r="3" fill="#f5c842"/>
+                            <circle cx="370" cy="80" r="3" fill="#1a3a8a"/>
+                            <circle cx="390" cy="68" r="3" fill="#f5c842"/>
+                            <circle cx="410" cy="75" r="3" fill="#1a3a8a"/>
+                            <circle cx="430" cy="82" r="3" fill="#f5c842"/>
+                            <circle cx="450" cy="70" r="3" fill="#1a3a8a"/>
+                            <circle cx="470" cy="78" r="3" fill="#f5c842"/>
+                            <circle cx="490" cy="85" r="3" fill="#1a3a8a"/>
+                            <circle cx="510" cy="72" r="3" fill="#f5c842"/>
+                            <circle cx="530" cy="80" r="3" fill="#1a3a8a"/>
+                            <circle cx="550" cy="75" r="3" fill="#f5c842"/>
+                        </g>
+                        
+                        <!-- Título -->
+                        <text x="300" y="248" text-anchor="middle" font-size="14" font-weight="bold" fill="#f5c842" opacity="0.8">
+                            🏟️ LA BOMBONERA
+                        </text>
+                    </svg>
+                    <div class="caption">🏟️ La Bombonera - Estadio Alberto J. Armando</div>
                 </div>
-                <div class="goal-counter">
-                    <button class="btn" onclick="scoreGoal()">⚽ ¡GOL!</button>
-                    <div class="number" id="goalCounter">0</div>
-                    <button class="btn btn-secondary" onclick="resetGoals()">🔄 Reset</button>
-                </div>
-                <p style="text-align: center; opacity: 0.7; font-size: 0.9rem;">
-                    ¡Cada gol ilumina la Bombonera!
-                </p>
-            </div>
-
-            <div class="stadium-card">
-                <h2>🌟 Ídolos de Boca</h2>
-                <div class="idols-grid">
-                    <div class="idol-card" onclick="showIdol('Maradona')">
-                        <span class="emoji">👑</span>
-                        <span class="name">Maradona</span>
-                    </div>
-                    <div class="idol-card" onclick="showIdol('Riquelme')">
-                        <span class="emoji">🎯</span>
-                        <span class="name">Riquelme</span>
-                    </div>
-                    <div class="idol-card" onclick="showIdol('Palermo')">
-                        <span class="emoji">🔟</span>
-                        <span class="name">Palermo</span>
-                    </div>
-                    <div class="idol-card" onclick="showIdol('Tevez')">
-                        <span class="emoji">🐕</span>
-                        <span class="name">Tevez</span>
-                    </div>
-                </div>
-                <div id="idolMessage" style="text-align: center; margin-top: 1rem; padding: 1rem; background: rgba(245, 200, 66, 0.1); border-radius: 10px; min-height: 50px;">
-                    💙💛💙 ¡Hacé click en un ídolo!
-                </div>
-            </div>
-        </div>
-
-        <div class="stadium-card" style="margin-bottom: 2rem;">
-            <h2>📊 Estadísticas Históricas</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="number">74</div>
-                    <div class="label">🏆 Títulos Oficiales</div>
-                </div>
-                <div class="stat-item">
-                    <div class="number">6</div>
-                    <div class="label">🌎 Copas Libertadores</div>
-                </div>
-                <div class="stat-item">
-                    <div class="number">3</div>
-                    <div class="label">🌍 Copas Intercontinentales</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="stadium-card" style="margin-bottom: 2rem; text-align: center;">
-            <h2>🎉 ¡Hacé la BOMBONERA EXPLOTAR!</h2>
-            <button class="btn-masa" onclick="explodeBombonera()">
-                💥 ¡HINCHADA EN LOCO!
-            </button>
-            <p style="margin-top: 1rem; opacity: 0.7;">Activá el efecto "La Bombonera no tiembla, late"</p>
-        </div>
-
-        <div class="stadium-card">
-            <h2>📜 Momentos Históricos</h2>
-            <div class="history-timeline" id="historyTimeline">
-                <div class="history-item">
-                    <span class="year">1905</span>
-                    <span>⚪ Fundación de Boca Juniors</span>
-                </div>
-                <div class="history-item">
-                    <span class="year">1977</span>
-                    <span>🏟️ Inauguración de La Bombonera</span>
-                </div>
-                <div class="history-item">
-                    <span class="year">2000</span>
-                    <span>🌎 Copa Libertadores (vs. Palmeiras)</span>
-                </div>
-                <div class="history-item">
-                    <span class="year">2003</span>
-                    <span>👑 Llegada de Riquelme</span>
-                </div>
-                <div class="history-item">
-                    <span class="year">2022</span>
-                    <span>⚽ 74° Título Oficial</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="quote-section">
-            <blockquote>
-                "Boca es un sentimiento que no se explica, se vive"
-            </blockquote>
-            <footer>— Juan Román Riquelme</footer>
-            <div style="margin-top: 1rem;">
-                <button class="btn" onclick="generateRandomQuote()">📢 Nueva Frase</button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="social">
-            <span>💙</span>
-            <span>💛</span>
-            <span>💙</span>
-            <span>💛</span>
-            <span>💙</span>
-        </div>
-        <p style="opacity: 0.7; font-size: 0.9rem;">
-            🏆 La Bombonera Virtual — Hecho con 💙💛 por y para hinchas de Boca
-        </p>
-        <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 0.5rem;">
-            ¡DALE BOCA! ⚽🔥
-        </p>
-    </footer>
-
-    <div class="confetti-container" id="confettiContainer"></div>
-
-    <script>
-        let goals = 0;
-
-        function scoreGoal() {
-            goals++;
-            document.getElementById('goalCounter').textContent = goals;
-            
-            const goalEmoji = document.getElementById('goalEmoji');
-            goalEmoji.textContent = '⚽🎉';
-            goalEmoji.style.transform = 'scale(1.5)';
-            
-            setTimeout(() => {
-                goalEmoji.textContent = '⚽';
-                goalEmoji.style.transform = 'scale(1)';
-            }, 500);
-            
-            createConfetti();
-            
-            const stadium = document.querySelector('.stadium-effect');
-            stadium.style.boxShadow = '0 0 50px rgba(245, 200, 66, 0.5)';
-            setTimeout(() => {
-                stadium.style.boxShadow = 'none';
-            }, 300);
-            
-            if (goals % 10 === 0 && goals > 0) {
-                setTimeout(() => {
-                    alert(`🎉 ¡${goals} GOLES! ¡Sos un crack! ¡DALE BOCA! 🎉`);
-                }, 100);
-            }
-        }
-
-        function resetGoals() {
-            goals = 0;
-            document.getElementById('goalCounter').textContent = '0';
-            document.getElementById('goalEmoji').textContent = '⚽';
-        }
-
-        function showIdol(name) {
-            const messages = {
-                'Maradona': '👑 "El mejor jugador de la historia. Ídolo eterno de Boca y el fútbol mundial."',
-                'Riquelme': '🎯 "El último enganche. Genio del fútbol, ídolo y presidente de Boca."',
-                'Palermo': '🔟 "Martín Palermo, el máximo goleador de la historia de Boca con 236 goles."',
-                'Tevez': '🐕 "El Apache, coraje y garra. Campeón de todo con Boca."'
-            };
-            
-            document.getElementById('idolMessage').innerHTML = `
-                <strong style="color: #f5c842;">${name}</strong><br>
-                ${messages[name] || '¡Ídolo de Boca Juniors!'}
-            `;
-            
-            const cards = document.querySelectorAll('.idol-card');
-            cards.forEach(card => {
-                if (card.querySelector('.name').textContent === name) {
-                    card.style.background = 'rgba(245, 200, 66, 0.2)';
-                    setTimeout(() => {
-                        card.style.background = 'rgba(255, 255, 255, 0.05)';
-                    }, 1000);
-                }
-            });
-        }
-
-        function generateRandomQuote() {
-            const quotes = [
-                '💙 "Boca es pasión, es sentimiento, es vida."',
-                '💛 "El que no es de Boca, es de nadie."',
-                '💙 "La Bombonera no tiembla, late."',
-                '💛 "Boca es más que un club, es una religión."',
-                '💙 "Ganar es un hábito en Boca."',
-                '💛 "La historia de Boca se escribe con gloria."',
-                '💙 "Boca es la mitad más uno del fútbol argentino."',
-                '💛 "Siempre creemos, siempre luchamos, siempre Boca."'
-            ];
-            
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            const quoteElement = document.querySelector('.quote-section blockquote');
-            quoteElement.textContent = quotes[randomIndex];
-            
-            const section = document.querySelector('.quote-section');
-            section.style.transition = 'all 0.3s ease';
-            section.style.transform = 'scale(1.02)';
-            setTimeout(() => {
-                section.style.transform = 'scale(1)';
-            }, 300);
-        }
-
-        function explodeBombonera() {
-            // Efecto masivo de confetti
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => createConfetti(), i * 300);
-            }
-            
-            // Cambiar colores de fondo temporalmente
-            const body = document.body;
-            const originalBg = body.style.background;
-            body.style.transition = 'background 0.5s ease';
-            body.style.background = 'linear-gradient(135deg, #f5c842 0%, #1a3a8a 100%)';
-            
-            setTimeout(() => {
-                body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
-            }, 1000);
-            
-            // Animar el título
-            const title = document.querySelector('.header h1');
-            title.style.transition = 'transform 0.5s ease';
-            title.style.transform = 'scale(1.2)';
-            setTimeout(() => {
-                title.style.transform = 'scale(1)';
-            }, 500);
-            
-            // Mostrar mensaje
-            const messages = [
-                '💙💛 ¡LA BOMBONERA TIEMBLA! 💛💙',
-                '🔥 ¡DALE BOCA CARAJO! 🔥',
-                '⚽ ¡A ESTO VINIMOS! ⚽',
-                '🏆 ¡BOCA BOCA BOCA! 🏆'
-            ];
-            
-            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-            const idolMsg = document.getElementById('idolMessage');
-            idolMsg.innerHTML = `<strong style="font-size: 1.5rem; color: #f5c842;">${randomMsg}</strong>`;
-            idolMsg.style.transition = 'all 0.3s ease';
-            idolMsg.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                idolMsg.style.transform = 'scale(1)';
-            }, 500);
-            
-            // Vibrar (si está disponible)
-            if (navigator.vibrate) {
-                navigator.vibrate([100, 50, 100, 50, 200]);
-            }
-        }
-
-        function createConfetti() {
-            const container = document.getElementById('confettiContainer');
-            const colors = ['#f5c842', '#1a3a8a', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
-            
-            for (let i = 0; i < 30; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = '-10px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
                 
-                container.appendChild(confetti);
-                
-                setTimeout(() => {
-                    confetti.remove();
-                }, 4000);
-            }
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                createConfetti();
-                setTimeout(createConfetti, 1000);
-            }, 500);
-            
-            document.querySelector('.header').style.opacity = '0';
-            document.querySelector('.header').style.transform = 'translateY(-20px)';
-            setTimeout(() => {
-                document.querySelector('.header').style.transition = 'all 1s ease';
-                document.querySelector('.header').style.opacity = '1';
-                document.querySelector('.header').style.transform = 'translateY(0)';
-            }, 100);
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            const goal = document.getElementById('goalEmoji');
-            const rect = goal.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            
-            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-            const distance = Math.min(10, Math.sqrt(
-                Math.pow(e.clientX - centerX, 2) + 
-                Math.pow(e.clientY - centerY, 2)
-            ) / 100);
-            
-            goal.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
-        });
-    </script>
-</body>
-</html>
+                <!-- Imagen 2: Hinchada -->
+                <div class="image-card">
+                    <svg width="100%" height="250" viewBox="0 0 600 250" style="background: linear-gradient(135deg, #0a1a3a, #1a2a5a);">
+                        <!-- Gradas -->
+                        <rect x="0" y="0" width="600" height="250" fill="#1a2a5a"/>
+                        
+                        <!-- Filas de hinchas -->
+                        <g>
+                            <!-- Fila 1 -->
+                            <circle cx="30" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="55" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="80" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="105" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="130" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="155" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="180" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="205" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="230" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="255" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="280" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="305" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="330" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="355" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="380" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="405" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="430" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="455" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="480" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="505" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="530" cy="30" r="8" fill="#f5c842"/>
+                            <circle cx="555" cy="30" r="8" fill="#1a3a8a"/>
+                            <circle cx="580" cy="30" r="8" fill="#f5c842"/>
+                            
+                            <!-- Fila 2 -->
+                            <circle cx="20" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="45" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="70" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="95" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="120" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="145" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="170" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="195" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="220" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="245" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="270" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="295" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="320" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="345" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="370" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="395" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="420" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="445" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="470" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="495" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="520" cy="60" r="8" fill="#1a3a8a"/>
+                            <circle cx="545" cy="60" r="8" fill="#f5c842"/>
+                            <circle cx="570" cy="60" r="8" fill="#1a3a8a"/>
+                            
+                            <!-- Fila 3 -->
+                            <circle cx="30" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="55" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="80" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="105" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="130" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="155" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="180" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="205" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="230" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="255" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="280" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="305" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="330" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="355" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="380" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="405" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="430" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="455" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="480" cy="90" r="8" fill="#f5c842"/>
+                            <circle cx="505" cy="90" r="8" fill="#1a3a8a"/>
+                            <circle cx="530" cy="90" r="8
