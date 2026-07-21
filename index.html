@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 La Bombonera Virtual - Boca Juniors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(180deg, #1a3a8a 0%, #0d1f4a 100%);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid #f5c842;
+        }
+
+        .header::before {
+            content: '🏟️';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            top: -20px;
+            right: -20px;
+            transform: rotate(10deg);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            text-shadow: 0 0 30px rgba(245, 200, 66, 0.3);
+            letter-spacing: 3px;
+        }
+
+        .header h1 span {
+            color: #f5c842;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            letter-spacing: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .interactive-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .interactive-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stadium-card {
+            background: linear-gradient(145deg, #1a2a5a, #0d1a3a);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 2px solid #f5c842;
+            box-shadow: 0 10px 40px rgba(245, 200, 66, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stadium-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stadium-card h2 {
+            color: #f5c842;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .stadium-effect {
+            background: radial-gradient(ellipse at center, #1a4a2a 0%, #0a1a0a 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stadium-effect .field {
+            width: 100%;
+            height: 4px;
+            background: #f5c842;
+            margin: 10px 0;
+            position: relative;
+            animation: pulseField 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseField {
+            0%, 100% { opacity: 0.3; transform: scaleX(1); }
+            50% { opacity: 1; transform: scaleX(1.1); }
+        }
+
+        .stadium-effect .goal {
+            font-size: 3rem;
+            animation: goalShine 1.5s ease-in-out infinite;
+        }
+
+        @keyframes goalShine {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 20px #f5c842; }
+            50% { transform: scale(1.2); text-shadow: 0 0 60px #f5c842; }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f5c842, #d4a830);
+            color: #1a1a1a;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 200, 66, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(245, 200, 66, 0.5);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #1a3a8a, #0d1f4a);
+            color: #f5c842;
+            border: 2px solid #f5c842;
+        }
+
+        .goal-counter {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .goal-counter .number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f5c842;
+            text-shadow: 0 0 30px rgba(245, 200, 66, 0.3);
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .idols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .idol-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(245, 200, 66, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .idol-card:hover {
+            background: rgba(245, 200, 66, 0.1);
+            transform: scale(1.05);
+            border-color: #f5c842;
+        }
+
+        .idol-card .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .idol-card .name {
+            font-weight: bold;
+            color: #f5c842;
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: confettiFall linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .history-timeline {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(245, 200, 66, 0.05);
+            padding-left: 1rem;
+        }
+
+        .history-item .year {
+            color: #f5c842;
+            font-weight: bold;
+        }
+
+        .quote-section {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(245, 200, 66, 0.1), rgba(26, 58, 138, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(245, 200, 66, 0.2);
+        }
+
+        .quote-section blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #f5c842;
+        }
+
+        .quote-section footer {
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .stat-item .number {
+            font-size: 2.5rem;
+            color: #f5c842;
+            font-weight: bold;
+        }
+
+        .stat-item .label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 3rem;
+            border-top: 1px solid rgba(245, 200, 66, 0.1);
+        }
+
+        .footer .social {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .footer .social span {
+            margin: 0 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer .social span:hover {
+            transform: scale(1.3) rotate(10deg);
+        }
+
+        .btn-masa {
+            background: linear-gradient(135deg, #f5c842, #d4a830);
+            color: #1a1a1a;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(245, 200, 66, 0.3);
+        }
+
+        .btn-masa:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(245, 200, 66, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🏆 <span>BOCA</span> JUNIORS</h1>
+        <div class="subtitle">✦ LA BOMBONERA VIRTUAL ✦</div>
+    </header>
+
+    <div class="container">
+        <div class="interactive-section">
+            <div class="stadium-card">
+                <h2>⚽ ¡Hacé un Gol!</h2>
+                <div class="stadium-effect">
+                    <div class="goal" id="goalEmoji">⚽</div>
+                    <div class="field"></div>
+                    <div style="display: flex; gap: 2rem; margin-top: 1rem;">
+                        <span>🚩</span>
+                        <span>🚩</span>
+                        <span>🚩</span>
+                    </div>
+                </div>
+                <div class="goal-counter">
+                    <button class="btn" onclick="scoreGoal()">⚽ ¡GOL!</button>
+                    <div class="number" id="goalCounter">0</div>
+                    <button class="btn btn-secondary" onclick="resetGoals()">🔄 Reset</button>
+                </div>
+                <p style="text-align: center; opacity: 0.7; font-size: 0.9rem;">
+                    ¡Cada gol ilumina la Bombonera!
+                </p>
+            </div>
+
+            <div class="stadium-card">
+                <h2>🌟 Ídolos de Boca</h2>
+                <div class="idols-grid">
+                    <div class="idol-card" onclick="showIdol('Maradona')">
+                        <span class="emoji">👑</span>
+                        <span class="name">Maradona</span>
+                    </div>
+                    <div class="idol-card" onclick="showIdol('Riquelme')">
+                        <span class="emoji">🎯</span>
+                        <span class="name">Riquelme</span>
+                    </div>
+                    <div class="idol-card" onclick="showIdol('Palermo')">
+                        <span class="emoji">🔟</span>
+                        <span class="name">Palermo</span>
+                    </div>
+                    <div class="idol-card" onclick="showIdol('Tevez')">
+                        <span class="emoji">🐕</span>
+                        <span class="name">Tevez</span>
+                    </div>
+                </div>
+                <div id="idolMessage" style="text-align: center; margin-top: 1rem; padding: 1rem; background: rgba(245, 200, 66, 0.1); border-radius: 10px; min-height: 50px;">
+                    💙💛💙 ¡Hacé click en un ídolo!
+                </div>
+            </div>
+        </div>
+
+        <div class="stadium-card" style="margin-bottom: 2rem;">
+            <h2>📊 Estadísticas Históricas</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number">74</div>
+                    <div class="label">🏆 Títulos Oficiales</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">6</div>
+                    <div class="label">🌎 Copas Libertadores</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">3</div>
+                    <div class="label">🌍 Copas Intercontinentales</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stadium-card" style="margin-bottom: 2rem; text-align: center;">
+            <h2>🎉 ¡Hacé la BOMBONERA EXPLOTAR!</h2>
+            <button class="btn-masa" onclick="explodeBombonera()">
+                💥 ¡HINCHADA EN LOCO!
+            </button>
+            <p style="margin-top: 1rem; opacity: 0.7;">Activá el efecto "La Bombonera no tiembla, late"</p>
+        </div>
+
+        <div class="stadium-card">
+            <h2>📜 Momentos Históricos</h2>
+            <div class="history-timeline" id="historyTimeline">
+                <div class="history-item">
+                    <span class="year">1905</span>
+                    <span>⚪ Fundación de Boca Juniors</span>
+                </div>
+                <div class="history-item">
+                    <span class="year">1977</span>
+                    <span>🏟️ Inauguración de La Bombonera</span>
+                </div>
+                <div class="history-item">
+                    <span class="year">2000</span>
+                    <span>🌎 Copa Libertadores (vs. Palmeiras)</span>
+                </div>
+                <div class="history-item">
+                    <span class="year">2003</span>
+                    <span>👑 Llegada de Riquelme</span>
+                </div>
+                <div class="history-item">
+                    <span class="year">2022</span>
+                    <span>⚽ 74° Título Oficial</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-section">
+            <blockquote>
+                "Boca es un sentimiento que no se explica, se vive"
+            </blockquote>
+            <footer>— Juan Román Riquelme</footer>
+            <div style="margin-top: 1rem;">
+                <button class="btn" onclick="generateRandomQuote()">📢 Nueva Frase</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="social">
+            <span>💙</span>
+            <span>💛</span>
+            <span>💙</span>
+            <span>💛</span>
+            <span>💙</span>
+        </div>
+        <p style="opacity: 0.7; font-size: 0.9rem;">
+            🏆 La Bombonera Virtual — Hecho con 💙💛 por y para hinchas de Boca
+        </p>
+        <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 0.5rem;">
+            ¡DALE BOCA! ⚽🔥
+        </p>
+    </footer>
+
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <script>
+        let goals = 0;
+
+        function scoreGoal() {
+            goals++;
+            document.getElementById('goalCounter').textContent = goals;
+            
+            const goalEmoji = document.getElementById('goalEmoji');
+            goalEmoji.textContent = '⚽🎉';
+            goalEmoji.style.transform = 'scale(1.5)';
+            
+            setTimeout(() => {
+                goalEmoji.textContent = '⚽';
+                goalEmoji.style.transform = 'scale(1)';
+            }, 500);
+            
+            createConfetti();
+            
+            const stadium = document.querySelector('.stadium-effect');
+            stadium.style.boxShadow = '0 0 50px rgba(245, 200, 66, 0.5)';
+            setTimeout(() => {
+                stadium.style.boxShadow = 'none';
+            }, 300);
+            
+            if (goals % 10 === 0 && goals > 0) {
+                setTimeout(() => {
+                    alert(`🎉 ¡${goals} GOLES! ¡Sos un crack! ¡DALE BOCA! 🎉`);
+                }, 100);
+            }
+        }
+
+        function resetGoals() {
+            goals = 0;
+            document.getElementById('goalCounter').textContent = '0';
+            document.getElementById('goalEmoji').textContent = '⚽';
+        }
+
+        function showIdol(name) {
+            const messages = {
+                'Maradona': '👑 "El mejor jugador de la historia. Ídolo eterno de Boca y el fútbol mundial."',
+                'Riquelme': '🎯 "El último enganche. Genio del fútbol, ídolo y presidente de Boca."',
+                'Palermo': '🔟 "Martín Palermo, el máximo goleador de la historia de Boca con 236 goles."',
+                'Tevez': '🐕 "El Apache, coraje y garra. Campeón de todo con Boca."'
+            };
+            
+            document.getElementById('idolMessage').innerHTML = `
+                <strong style="color: #f5c842;">${name}</strong><br>
+                ${messages[name] || '¡Ídolo de Boca Juniors!'}
+            `;
+            
+            const cards = document.querySelectorAll('.idol-card');
+            cards.forEach(card => {
+                if (card.querySelector('.name').textContent === name) {
+                    card.style.background = 'rgba(245, 200, 66, 0.2)';
+                    setTimeout(() => {
+                        card.style.background = 'rgba(255, 255, 255, 0.05)';
+                    }, 1000);
+                }
+            });
+        }
+
+        function generateRandomQuote() {
+            const quotes = [
+                '💙 "Boca es pasión, es sentimiento, es vida."',
+                '💛 "El que no es de Boca, es de nadie."',
+                '💙 "La Bombonera no tiembla, late."',
+                '💛 "Boca es más que un club, es una religión."',
+                '💙 "Ganar es un hábito en Boca."',
+                '💛 "La historia de Boca se escribe con gloria."',
+                '💙 "Boca es la mitad más uno del fútbol argentino."',
+                '💛 "Siempre creemos, siempre luchamos, siempre Boca."'
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * quotes.length);
+            const quoteElement = document.querySelector('.quote-section blockquote');
+            quoteElement.textContent = quotes[randomIndex];
+            
+            const section = document.querySelector('.quote-section');
+            section.style.transition = 'all 0.3s ease';
+            section.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                section.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        function explodeBombonera() {
+            // Efecto masivo de confetti
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => createConfetti(), i * 300);
+            }
+            
+            // Cambiar colores de fondo temporalmente
+            const body = document.body;
+            const originalBg = body.style.background;
+            body.style.transition = 'background 0.5s ease';
+            body.style.background = 'linear-gradient(135deg, #f5c842 0%, #1a3a8a 100%)';
+            
+            setTimeout(() => {
+                body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
+            }, 1000);
+            
+            // Animar el título
+            const title = document.querySelector('.header h1');
+            title.style.transition = 'transform 0.5s ease';
+            title.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                title.style.transform = 'scale(1)';
+            }, 500);
+            
+            // Mostrar mensaje
+            const messages = [
+                '💙💛 ¡LA BOMBONERA TIEMBLA! 💛💙',
+                '🔥 ¡DALE BOCA CARAJO! 🔥',
+                '⚽ ¡A ESTO VINIMOS! ⚽',
+                '🏆 ¡BOCA BOCA BOCA! 🏆'
+            ];
+            
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            const idolMsg = document.getElementById('idolMessage');
+            idolMsg.innerHTML = `<strong style="font-size: 1.5rem; color: #f5c842;">${randomMsg}</strong>`;
+            idolMsg.style.transition = 'all 0.3s ease';
+            idolMsg.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                idolMsg.style.transform = 'scale(1)';
+            }, 500);
+            
+            // Vibrar (si está disponible)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#f5c842', '#1a3a8a', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'];
+            
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                createConfetti();
+                setTimeout(createConfetti, 1000);
+            }, 500);
+            
+            document.querySelector('.header').style.opacity = '0';
+            document.querySelector('.header').style.transform = 'translateY(-20px)';
+            setTimeout(() => {
+                document.querySelector('.header').style.transition = 'all 1s ease';
+                document.querySelector('.header').style.opacity = '1';
+                document.querySelector('.header').style.transform = 'translateY(0)';
+            }, 100);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const goal = document.getElementById('goalEmoji');
+            const rect = goal.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+            const distance = Math.min(10, Math.sqrt(
+                Math.pow(e.clientX - centerX, 2) + 
+                Math.pow(e.clientY - centerY, 2)
+            ) / 100);
+            
+            goal.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+        });
+    </script>
+</body>
+</html>
