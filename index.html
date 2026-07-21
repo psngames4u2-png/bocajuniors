@@ -923,4 +923,165 @@
         // Efecto de daño
         if (bocaPct < 30) {
             document.getElementById('bocaHealthFill').style.background = 'linear-gradient(90deg, #ff4444, #ff6666)';
+        } else {
+            document.getElementById('bocaHealthFill').style.background = 'linear-gradient(90deg, #f5c842, #ffd700)';
         }
+        
+        if (riverPct < 30) {
+            document.getElementById('riverHealthFill').style.background = 'linear-gradient(90deg, #440000, #cc0000)';
+        } else {
+            document.getElementById('riverHealthFill').style.background = 'linear-gradient(90deg, #cc0000, #ff4444)';
+        }
+    }
+
+    function restartGame() {
+        boca.hp = boca.maxHp;
+        boca.x = 150;
+        boca.y = 250;
+        boca.invincible = 0;
+        boca.attackCooldown = 0;
+        boca.kameCooldown = 0;
+        
+        river.hp = river.maxHp;
+        river.x = 600;
+        river.y = 250;
+        river.invincible = 0;
+        river.attackCooldown = 0;
+        
+        projectiles.length = 0;
+        gameOver = false;
+        winner = '';
+        
+        document.getElementById('gameOverOverlay').classList.remove('show');
+        updateHealthBars();
+        setMessage('⚔️ ¡Revancha! ¡DALE BOCA! 💙💛');
+    }
+
+    // Dibujar todo
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        
+        // Césped
+        const grassGradient = ctx.createLinearGradient(0, 0, 0, H);
+        grassGradient.addColorStop(0, '#0a1a2a');
+        grassGradient.addColorStop(0.3, '#1a4a2a');
+        grassGradient.addColorStop(0.7, '#1a5a2a');
+        grassGradient.addColorStop(1, '#0d2a1a');
+        ctx.fillStyle = grassGradient;
+        ctx.fillRect(0, 0, W, H);
+        
+        // Líneas de la cancha
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([10, 10]);
+        
+        // Círculo central
+        ctx.beginPath();
+        ctx.arc(W/2, H/2, 60, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // Línea central
+        ctx.beginPath();
+        ctx.moveTo(W/2, 30);
+        ctx.lineTo(W/2, H - 30);
+        ctx.stroke();
+        
+        ctx.setLineDash([]);
+        
+        // Áreas
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(20, 80, 100, 140);
+        ctx.strokeRect(W - 120, 80, 100, 140);
+        
+        // Título en la cancha
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+        ctx.font = 'bold 60px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('⚡ BOCA ⚡', W/2, H/2);
+        ctx.fillStyle = 'rgba(255, 0, 0, 0.03)';
+        ctx.fillText('🐉 RIVER 🐉', W/2, H/2 + 60);
+        
+        // Dibujar proyectiles
+        for (const p of projectiles) {
+            drawProjectile(p);
+        }
+        
+        // Efecto de invencibilidad (parpadeo)
+        if (boca.invincible > 0 && Math.floor(boca.invincible / 3) % 2 === 0) {
+            ctx.globalAlpha = 0.5;
+        }
+        drawBocachu(boca.x, boca.y, boca.facing);
+        ctx.globalAlpha = 1;
+        
+        if (river.invincible > 0 && Math.floor(river.invincible / 3) % 2 === 0) {
+            ctx.globalAlpha = 0.5;
+        }
+        drawGodzilla(river.x, river.y, river.facing, river.state);
+        ctx.globalAlpha = 1;
+        
+        // Marcador en la cancha
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.fillRect(10, 10, 150, 25);
+        ctx.fillStyle = '#f5c842';
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(`⚡ BOCA: ${Math.round(boca.hp)} HP`, 20, 12);
+        
+        ctx.fillStyle = '#ff4444';
+        ctx.textAlign = 'right';
+        ctx.fillText(`RIVER: ${Math.round(river.hp)} HP 🐉`, W - 20, 12);
+    }
+
+    // Loop del juego
+    function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Función para mover desde botones (móvil)
+    function movePokemon(dir) {
+        switch(dir) {
+            case 'up': keys.up = true; setTimeout(() => keys.up = false, 100); break;
+            case 'down': keys.down = true; setTimeout(() => keys.down = false, 100); break;
+            case 'left': keys.left = true; setTimeout(() => keys.left = false, 100); break;
+            case 'right': keys.right = true; setTimeout(() => keys.right = false, 100); break;
+        }
+    }
+
+    // Eventos de teclado
+    document.addEventListener('keydown', (e) => {
+        e.preventDefault();
+        switch(e.key) {
+            case 'ArrowLeft': keys.left = true; break;
+            case 'ArrowRight': keys.right = true; break;
+            case 'ArrowUp': keys.up = true; break;
+            case 'ArrowDown': keys.down = true; break;
+            case 'k': case 'K': keys.k = true; break;
+            case 'o': case 'O': keys.o = true; break;
+            case ' ': restartGame(); break;
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        switch(e.key) {
+            case 'ArrowLeft': keys.left = false; break;
+            case 'ArrowRight': keys.right = false; break;
+            case 'ArrowUp': keys.up = false; break;
+            case 'ArrowDown': keys.down = false; break;
+            case 'k': case 'K': keys.k = false; break;
+            case 'o': case 'O': keys.o = false; break;
+        }
+    });
+
+    // Iniciar
+    updateHealthBars();
+    setMessage('⚔️ ¡BOCACHU vs GODZILLA RIVER! ¡DALE BOCA! 💙💛');
+    gameLoop();
+</script>
+
+</body>
+</html>
